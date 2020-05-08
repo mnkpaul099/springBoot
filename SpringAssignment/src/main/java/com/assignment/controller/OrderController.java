@@ -19,19 +19,19 @@ import com.assignment.service.OrderService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/myapp")
+@RequestMapping(value="/myapp")
 public class OrderController
 {
     @Autowired
     OrderService orderService;
     
     @GetMapping({ "/getAllOrders" })
-    public List<OrderDetails> getAllOrders() {
+    public List<OrderDetails> getAllOrders() throws InterruptedException {
         return (List<OrderDetails>)orderService.getAllOrdersService();
     }
     
     @GetMapping({ "/getOrder/{orderId}" })
-    public Optional<OrderDetails> getOrder(@PathVariable("orderId")  int orderId) throws OrderNotFoundException {
+    public Optional<OrderDetails> getOrder(@PathVariable("orderId")  int orderId) throws OrderNotFoundException, InterruptedException {
         return (Optional<OrderDetails>)orderService.getOrderService(orderId);
     }
     

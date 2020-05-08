@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface OrderService
 {
-    List<OrderDetails> getAllOrdersService();
+    List<OrderDetails> getAllOrdersService() throws InterruptedException;
     
-    Optional<OrderDetails> getOrderService(final int orderId) throws OrderNotFoundException;
+    Optional<OrderDetails> getOrderService(final int orderId) throws OrderNotFoundException, InterruptedException;
     
     OrderDetails newOrderService(final OrderDetails orderDetails) throws ExistingOrderException;
     
