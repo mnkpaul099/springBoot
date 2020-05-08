@@ -7,6 +7,8 @@ import java.util.Optional;
 import com.assignment.model.OrderDetails;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+
 import com.assignment.dao.OrderDetailsDao;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,16 @@ public class OrderServiceImpl implements OrderService
     OrderDetailsDao orderdao;
     
     @Override
-    public List<OrderDetails> getAllOrdersService() {
+    //@Cacheable(value="order-cache", key="#orderId")
+    public List<OrderDetails> getAllOrdersService() throws InterruptedException {
+    	//Thread.sleep(5000);
         return (List<OrderDetails>)orderdao.findAll();
     }
     
     @Override
-    public Optional<OrderDetails> getOrderService(int orderId) throws OrderNotFoundException {
+    @Cacheable(value="order-cache", key="#orderId")
+    public Optional<OrderDetails> getOrderService(int orderId) throws OrderNotFoundException, InterruptedException {
+    	Thread.sleep(5000);
         if (!orderdao.existsById(orderId)) {
             throw new OrderNotFoundException("Invalid Data!");
         }
